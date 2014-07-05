@@ -51,6 +51,7 @@ understand the basics of working with version control.
 
 %package -n etckeeper-cron
 Summary:            The etckeeper cron function
+Group:              System/Management
 Requires:           etckeeper-common
 Requires:           cron
 %description -n etckeeper-cron
@@ -60,6 +61,7 @@ with cron.
 
 %package -n etckeeper-pkgmanager-collabo
 Summary:            The etckeeper collaboration function with package-manager
+Group:              System/Management
 Requires:           etckeeper-common
 
 %if 0%{?suse_version}
@@ -73,6 +75,7 @@ with package-manager.
 
 %package -n etckeeper-common
 Summary:            The etckeeper main function
+Group:              System/Management
 Requires:           git
 %description -n etckeeper-common
 The etckeeper program is a tool to let /etc be stored in a git,
