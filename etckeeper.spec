@@ -27,14 +27,13 @@ License:            GPL-2.0+
 BuildRoot:          %{_tmppath}/build-%{name}-%{version}
 BuildArch:          noarch
 BuildRequires:      make
-Recommends:         etckeeper-cron
-Recommends:         etckeeper-pkgmanager-collabo
 # delete 2014-07-05 bkbin005@rinku.zaq.ne.jp
 # Users should be able to select VCS.
 #Requires:           git
 %define LPM rpm
 
 %if 0%{?suse_version}
+Recommends:         etckeeper-cron etckeeper-pkgmanager-collabo
 BuildRequires:      libzypp
 %define HPM zypper
 %else
@@ -55,6 +54,7 @@ understand the basics of working with version control.
 %package -n etckeeper-cron
 Summary:            The etckeeper cron function
 Group:              System/Management
+Requires:           etckeeper
 Requires:           cron
 %description -n etckeeper-cron
 The etckeeper-cron furnishes etckeeper collaboration function
@@ -64,6 +64,7 @@ with cron.
 %package -n etckeeper-pkgmanager-collabo
 Summary:            The etckeeper collaboration function with package-manager
 Group:              System/Management
+Requires:           etckeeper
 
 %if 0%{?suse_version}
 Requires:           zypp-plugin-python
