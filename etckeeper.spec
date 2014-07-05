@@ -1,6 +1,6 @@
 # vim: set sw=4 ts=4 et nu:
-
-# Copyright (c) 2014 Pascal Bleser <pascal.bleser@opensuse.org>
+# Copyright (c) 2013 Pascal Bleser <pascal.bleser@opensuse.org>
+# Copyright (c) 2014 Mitsutoshi NAKANO <bkbin005@rinku.zaq.ne.jp>
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -25,29 +25,64 @@ URL:                http://joeyh.name/code/etckeeper/
 Group:              System/Management
 License:            GPL-2.0+
 BuildRoot:          %{_tmppath}/build-%{name}-%{version}
+BuildArch:          noarch
 BuildRequires:      make
-Requires:           git
+Requires:           etckeeper-cron
+Requires:           etckeeper-pkgmanager-collabo
+%define LPM rpm
+
 %if 0%{?suse_version}
 BuildRequires:      libzypp
-Requires:           zypp-plugin-python
 %define HPM zypper
-%define LPM rpm
 %else
 BuildRequires:      yum
 %define HPM yum
-%define LPM rpm
 %endif
-Requires:           cron
-BuildArch:          noarch
 
 %description
 The etckeeper program is a tool to let /etc be stored in a git,
 mercurial, bzr or darcs repository. It hooks into yum to automatically
 commit changes made to /etc during package upgrades. It tracks file
 metadata that version control systems do not normally support, but that
-is important for /etc, such as the permissions of /etc/shadow. It's
+is important for /etc, such as the permissions of /etc/shadow. It is
 quite modular and configurable, while also being simple to use if you
 understand the basics of working with version control.
+
+
+%package -n etckeeper-cron
+Summary:            The etckeeper cron function
+Requires:           etckeeper-common
+Requires:           cron
+%description -n etckeeper-cron
+The etckeeper-cron furnishes etckeeper collaboration function
+with cron.
+
+
+%package -n etckeeper-pkgmanager-collabo
+Summary:            The etckeeper collaboration function with package-manager
+Requires:           etckeeper-common
+
+%if 0%{?suse_version}
+Requires:           zypp-plugin-python
+%endif
+
+%description -n etckeeper-pkgmanager-collabo
+The etckeeper-cron furnishes etckeeper collaboration function
+with package-manager.
+
+
+%package -n etckeeper-common
+Summary:            The etckeeper main function
+Requires:           git
+%description -n etckeeper-common
+The etckeeper program is a tool to let /etc be stored in a git,
+mercurial, bzr or darcs repository. It hooks into yum to automatically
+commit changes made to /etc during package upgrades. It tracks file
+metadata that version control systems do not normally support, but that
+is important for /etc, such as the permissions of /etc/shadow. It is
+quite modular and configurable, while also being simple to use if you
+understand the basics of working with version control.
+
 
 %prep
 %setup -q -n "%{name}"
@@ -77,26 +112,38 @@ install -D debian/cron.daily "%{buildroot}/etc/cron.daily/%{name}"
 %clean
 %{?buildroot:%__rm -rf "%{buildroot}"}
 
-%files
+
+%files -n etckeeper-common
 %defattr(-,root,root)
 %doc GPL TODO README.md
 %{_bindir}/etckeeper
-%config(noreplace) /etc/cron.daily/etckeeper
 %dir %{_sysconfdir}/etckeeper
 %config(noreplace) %{_sysconfdir}/etckeeper/etckeeper.conf
 %dir %{_sysconfdir}/etckeeper/*.d
 %config %{_sysconfdir}/etckeeper/*.d/*
+%doc %{_mandir}/man8/etckeeper.8*
+%config %{_sysconfdir}/bash_completion.d/etckeeper
+
+
+%files -n etckeeper-cron
+%defattr(-,root,root)
+%config(noreplace) %{_sysconfdir}/cron.daily/etckeeper
+
+
+%files -n etckeeper-pkgmanager-collabo
+%defattr(-,root,root)
+
 %if 0%{?suse_version}
 %dir %{_prefix}/lib/zypp
 %dir %{_prefix}/lib/zypp/plugins
 %dir %{_prefix}/lib/zypp/plugins/commit
 %{_prefix}/lib/zypp/plugins/commit/zypper-etckeeper.py
 %endif
+
 %if 0%{?fedora} || 0%{?rhel}
 %config(noreplace) %{_sysconfdir}/yum/pluginconf.d/etckeeper.conf
 %{_prefix}/lib/yum-plugins/etckeeper.*
 %endif
-%doc %{_mandir}/man8/etckeeper.8*
-%config %{_sysconfdir}/bash_completion.d/etckeeper
+
 
 %changelog

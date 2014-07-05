@@ -1,6 +1,13 @@
 -------------------------------------------------------------------
-Fri Jul  4 22:22:07 UTC 2014 - bkbin005@rinku.zaq.ne.jp
+Sat Jul  5 05:12:47 UTC 2014 - bkbin005@rinku.zaq.ne.jp
 
+- divide etckeeper package into 3
+  + etckeeper-common:
+    main function.
+  + etckeeper-cron:
+    cron function.
+  + etckeeper-pkgmanager-collabo:
+    collaboration with package manager.
 - fix (bnc#884154): forgot to reqire zypp-plugin-python.
 
 -------------------------------------------------------------------
