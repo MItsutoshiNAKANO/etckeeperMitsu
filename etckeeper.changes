@@ -1,10 +1,10 @@
 -------------------------------------------------------------------
-Sat Jul  5 08:10:45 UTC 2014 - bkbin005@rinku.zaq.ne.jp
+Sat Jul  5 19:54:31 UTC 2014 - bkbin005@rinku.zaq.ne.jp
 
 - delete "Requires: git"
   users can select VCS.
 - divide etckeeper package into 3
-  + etckeeper-common:
+  + etckeeper:
     main function.
   + etckeeper-cron:
     cron function.

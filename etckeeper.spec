@@ -27,8 +27,11 @@ License:            GPL-2.0+
 BuildRoot:          %{_tmppath}/build-%{name}-%{version}
 BuildArch:          noarch
 BuildRequires:      make
-Requires:           etckeeper-cron
-Requires:           etckeeper-pkgmanager-collabo
+Recommends:         etckeeper-cron
+Recommends:         etckeeper-pkgmanager-collabo
+# delete 2014-07-05 bkbin005@rinku.zaq.ne.jp
+# Users should be able to select VCS.
+#Requires:           git
 %define LPM rpm
 
 %if 0%{?suse_version}
@@ -52,7 +55,6 @@ understand the basics of working with version control.
 %package -n etckeeper-cron
 Summary:            The etckeeper cron function
 Group:              System/Management
-Requires:           etckeeper-common
 Requires:           cron
 %description -n etckeeper-cron
 The etckeeper-cron furnishes etckeeper collaboration function
@@ -62,7 +64,6 @@ with cron.
 %package -n etckeeper-pkgmanager-collabo
 Summary:            The etckeeper collaboration function with package-manager
 Group:              System/Management
-Requires:           etckeeper-common
 
 %if 0%{?suse_version}
 Requires:           zypp-plugin-python
@@ -71,22 +72,6 @@ Requires:           zypp-plugin-python
 %description -n etckeeper-pkgmanager-collabo
 The etckeeper-cron furnishes etckeeper collaboration function
 with package-manager.
-
-
-%package -n etckeeper-common
-Summary:            The etckeeper main function
-Group:              System/Management
-# delete 2014-07-05 bkbin005@rinku.zaq.ne.jp
-# Users should be able to select VCS.
-#Requires:           git
-%description -n etckeeper-common
-The etckeeper program is a tool to let /etc be stored in a git,
-mercurial, bzr or darcs repository. It hooks into yum to automatically
-commit changes made to /etc during package upgrades. It tracks file
-metadata that version control systems do not normally support, but that
-is important for /etc, such as the permissions of /etc/shadow. It is
-quite modular and configurable, while also being simple to use if you
-understand the basics of working with version control.
 
 
 %prep
@@ -119,12 +104,7 @@ install -D debian/cron.daily "%{buildroot}/etc/cron.daily/%{name}"
 
 %files
 %defattr(-,root,root)
-%doc TODO
-
-
-%files -n etckeeper-common
-%defattr(-,root,root)
-%doc GPL README.md
+%doc GPL README.md TODO
 %{_bindir}/etckeeper
 %dir %{_sysconfdir}/etckeeper
 %config(noreplace) %{_sysconfdir}/etckeeper/etckeeper.conf
