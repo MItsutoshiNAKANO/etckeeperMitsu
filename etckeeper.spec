@@ -130,7 +130,7 @@ install -D debian/cron.daily "%{buildroot}/etc/cron.daily/%{name}"
 %{_prefix}/lib/zypp/plugins/commit/zypper-etckeeper.py
 %endif
 
-%if 0%{?fedora} || 0%{?rhel}
+%if 0%{?fedora} || 0%{?rhel} || 0%{?centos}
 %config(noreplace) %{_sysconfdir}/yum/pluginconf.d/etckeeper.conf
 %{_prefix}/lib/yum-plugins/etckeeper.*
 %endif
