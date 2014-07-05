@@ -76,7 +76,9 @@ with package-manager.
 %package -n etckeeper-common
 Summary:            The etckeeper main function
 Group:              System/Management
-Requires:           git
+# delete 2014-07-05 bkbin005@rinku.zaq.ne.jp
+# Users should be able to select VCS.
+#Requires:           git
 %description -n etckeeper-common
 The etckeeper program is a tool to let /etc be stored in a git,
 mercurial, bzr or darcs repository. It hooks into yum to automatically
@@ -115,10 +117,14 @@ install -D debian/cron.daily "%{buildroot}/etc/cron.daily/%{name}"
 %clean
 %{?buildroot:%__rm -rf "%{buildroot}"}
 
+%files
+%defattr(-,root,root)
+%doc TODO
+
 
 %files -n etckeeper-common
 %defattr(-,root,root)
-%doc GPL TODO README.md
+%doc GPL README.md
 %{_bindir}/etckeeper
 %dir %{_sysconfdir}/etckeeper
 %config(noreplace) %{_sysconfdir}/etckeeper/etckeeper.conf
