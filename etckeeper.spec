@@ -95,8 +95,10 @@ make \
     PYTHON_INSTALL_OPTS="--prefix=%{_prefix} --root=%{buildroot}" \
     install
 
-# who cares about bzr...
-rm -rf "%{buildroot}%{_prefix}/lib"/python*
+# delete 2014-07-06 bkbin005@rinku.zaq.ne.jp - does not seems to work it.
+# so, delete it.
+## who cares about bzr...
+#rm -rf "{buildroot}{_prefix}/lib"/python*
 
 install -D debian/cron.daily "%{buildroot}/etc/cron.daily/%{name}"
 
