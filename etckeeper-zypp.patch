@@ -1,0 +1,46 @@
+From: Mitsutoshi NAKANO <bkbin005@rinku.zaq.ne.jp>
+Date: 2014-06-18 20:14:28 +0900
+Subject: zypper-etckeeper.py: change permission and locale .
+References: bnc#884154
+ http://lists.opensuse.org/archive/opensuse-factory/2014-06/msg00090.html
+Upstream: merged
+
+This patch fixed bnc#884154 .
+I changed zypper-etckeeper.py 's permission from 644 to 755.
+I changed zypper-etckeeper.py's LANG to C.
+
+
+---
+diff --git a/Makefile b/Makefile
+index 13ce4fe..cf034a2 100644
+--- a/Makefile
++++ b/Makefile
+@@ -45,7 +45,7 @@ ifeq ($(HIGHLEVEL_PACKAGE_MANAGER),yum)
+ endif
+ ifeq ($(HIGHLEVEL_PACKAGE_MANAGER),zypper)
+ 	mkdir -p $(DESTDIR)$(prefix)/lib/zypp/plugins/commit
+-	$(INSTALL_DATA) zypper-etckeeper.py $(DESTDIR)$(prefix)/lib/zypp/plugins/commit/zypper-etckeeper.py
++	$(INSTALL) zypper-etckeeper.py $(DESTDIR)$(prefix)/lib/zypp/plugins/commit/zypper-etckeeper.py
+ endif
+ 	-./etckeeper-bzr/__init__.py install --root=$(DESTDIR) ${PYTHON_INSTALL_OPTS} || echo "** bzr support not installed"
+ 	echo "** installation successful"
+diff --git a/zypper-etckeeper.py b/zypper-etckeeper.py
+index b21f23d..daa2ff2 100755
+--- a/zypper-etckeeper.py
++++ b/zypper-etckeeper.py
+@@ -3,7 +3,7 @@
+ import errno
+ import subprocess
+ import zypp_plugin
+-
++import os
+ 
+ def _call_etckeeper(install_arg):
+     # zypper interprets the plugin's stdout as described in
+@@ -34,5 +34,6 @@ class EtckeeperPlugin(zypp_plugin.Plugin):
+         self.ack()
+ 
+ 
++os.environ["LANG"] = "C"
+ plugin = EtckeeperPlugin()
+ plugin.main()
