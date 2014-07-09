@@ -82,6 +82,7 @@ Requires:       zypp-plugin-python
 The etckeeper-zypp-plugin furnishes etckeeper collaboration function
 with ZYpp.
 %else
+%package yum-plugin
 Summary:        The etckeeper collaboration function with yum
 Group:          System/Management
 Requires:       etckeeper
