@@ -1,0 +1,47 @@
+-------------------------------------------------------------------
+Mon Jul  7 21:21:34 UTC 2014 - bkbin005@rinku.zaq.ne.jp
+
+- modified etckeeper.spec style
+  by "osc service run format_spec_file".
+- removed lint code 'rm -rf "{buildroot}{_prefix}/lib"/python*'.
+  This line does not work.
+- removed "Requires: git".
+  users can select VCS.
+- divide etckeeper package into 3.
+  + etckeeper:
+    main function.
+  + etckeeper-cron:
+    cron function.
+  + etckeeper-pkgmanager-collabo:
+    collaboration with package manager.
+- fix (bnc#884154): forgot to reqire zypp-plugin-python.
+
+-------------------------------------------------------------------
+Wed Jul  2 20:33:59 UTC 2014 - bkbin005@rinku.zaq.ne.jp
+
+- fix (bnc#884154).  change permission and locale.
+  + added etckeeper-zypp.patch
+    1) changed zypper-etckeeper.py 's permission from 644 to 755
+      (in Makefile).
+    2) in zypper-etckeeper.py set LANG to C.
+  please see also:
+  http://lists.opensuse.org/archive/opensuse-factory/2014-06/msg00090.html
+- version up to 1.12 from 1.7
+  + README's filename changed from README to README.md.
+  + fix some bugs.
+  + fix some typos.
+  for detail,
+  please do "git clone git://git.kitenet.net/etckeeper.git"
+  and "git log".
+
+-------------------------------------------------------------------
+Wed Aug 21 16:59:59 UTC 2013 - dvaleev@suse.com
+
+- don't require git to build
+- relax git version requirement 
+
+-------------------------------------------------------------------
+Sat Aug 10 10:33:54 CET 2013 - pascal.bleser@opensuse.org
+
+- initial version (1.7)
+
