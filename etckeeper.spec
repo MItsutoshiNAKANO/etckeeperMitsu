@@ -33,18 +33,20 @@ Url:            http://joeyh.name/code/etckeeper/
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 BuildArch:      noarch
 BuildRequires:  make
-# delete 2014-07-05 bkbin005@rinku.zaq.ne.jp
-# Users should be able to select VCS.
-#Requires:       git
 %define LPM rpm
 
 %if 0%{?suse_version}
-Recommends:     etckeeper-cron
-Recommends:     etckeeper-pkgmanager-collabo
+# modified 2014-07-09 bkbin005@rinku.zaq.ne.jp
+# Users should be able to select VCS.
+Recommends:     git
+Recommends:     %{name}-cron
+Recommends:     %{name}-zypp-plugin
 BuildRequires:  libzypp
 %define HPM zypper
 %else
 BuildRequires:  yum
+Requires:       %{name}-cron
+Requires:       %{name}-yum-plugin
 %define HPM yum
 %endif
 
@@ -58,30 +60,36 @@ quite modular and configurable, while also being simple to use if you
 understand the basics of working with version control.
 
 
-%package -n etckeeper-cron
+%package cron
 Summary:        The etckeeper cron function
 Group:          System/Management
 Requires:       cron
 Requires:       etckeeper
 
-%description -n etckeeper-cron
+%description cron
 The etckeeper-cron furnishes etckeeper collaboration function
 with cron.
 
 
-%package -n etckeeper-pkgmanager-collabo
-Summary:        The etckeeper collaboration function with package-manager
+%if 0%{?suse_version}
+%package zypp-plugin
+Summary:        The etckeeper collaboration function with ZYpp
+Group:          System/Management
+Requires:       etckeeper
+Requires:       zypp-plugin-python
+
+%description zypp-plugin
+The etckeeper-zypp-plugin furnishes etckeeper collaboration function
+with ZYpp.
+%else
+Summary:        The etckeeper collaboration function with yum
 Group:          System/Management
 Requires:       etckeeper
 
-%if 0%{?suse_version}
-Requires:       zypp-plugin-python
+%description yum-plugin
+The etckeeper-yum-plugin furnishes etckeeper collaboration function
+with YUM.
 %endif
-
-%description -n etckeeper-pkgmanager-collabo
-The etckeeper-cron furnishes etckeeper collaboration function
-with package-manager.
-
 
 %prep
 %setup -q -n "%{name}"
@@ -124,19 +132,20 @@ install -D debian/cron.daily "%{buildroot}/etc/cron.daily/%{name}"
 %doc %{_mandir}/man8/etckeeper.8*
 %config %{_sysconfdir}/bash_completion.d/etckeeper
 
-%files -n etckeeper-cron
+%files cron
 %defattr(-,root,root)
 %config(noreplace) %{_sysconfdir}/cron.daily/etckeeper
 
-%files -n etckeeper-pkgmanager-collabo
-%defattr(-,root,root)
-
 %if 0%{?suse_version}
+%files zypp-plugin
+%defattr(-,root,root)
 %dir %{_prefix}/lib/zypp
 %dir %{_prefix}/lib/zypp/plugins
 %dir %{_prefix}/lib/zypp/plugins/commit
 %{_prefix}/lib/zypp/plugins/commit/zypper-etckeeper.py
 %else
+%files yum-plugin
+%defattr(-,root,root)
 %config(noreplace) %{_sysconfdir}/yum/pluginconf.d/etckeeper.conf
 %{_prefix}/lib/yum-plugins/etckeeper.*
 %endif

@@ -1,9 +1,17 @@
 -------------------------------------------------------------------
+Wed Jul  9 12:58:48 UTC 2014 - bkbin005@rinku.zaq.ne.jp
+
+- rename subpackage from pkgmanager-collabo
+  to zypp-plugin or yum-plugin.
+  please see also:
+  http://lists.opensuse.org/archive/opensuse-factory/2014-07/msg00060.html
+
+-------------------------------------------------------------------
 Mon Jul  7 21:21:34 UTC 2014 - bkbin005@rinku.zaq.ne.jp
 
 - modified etckeeper.spec style
   by "osc service run format_spec_file".
-- removed lint code 'rm -rf "{buildroot}{_prefix}/lib"/python*'.
+- removed lint code 'rm -rf "%{buildroot}%{_prefix}/lib"/python*'.
   This line does not work.
 - removed "Requires: git".
   users can select VCS.
