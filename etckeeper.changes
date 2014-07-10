@@ -1,8 +1,17 @@
 -------------------------------------------------------------------
+Thu Jul 10 02:30:59 UTC 2014 - bkbin005@rinku.zaq.ne.jp
+
+- modified etckeeper.spec:  added bzr support files.
+  Their files need "Buildrequires: python-devel bzr",
+  but did not write them, so they were not installed untill now.
+
+-------------------------------------------------------------------
 Wed Jul  9 12:58:48 UTC 2014 - bkbin005@rinku.zaq.ne.jp
 
-- rename subpackage from pkgmanager-collabo
-  to zypp-plugin or yum-plugin.
+- modified etckeeper.spec
+  + rename subpackage from pkgmanager-collabo
+    to zypp-plugin or yum-plugin.
+  + added "Reccomends: git".
   please see also:
   http://lists.opensuse.org/archive/opensuse-factory/2014-07/msg00060.html
 
