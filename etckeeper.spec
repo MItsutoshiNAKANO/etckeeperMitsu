@@ -19,6 +19,9 @@
 #
 
 
+# see https://en.opensuse.org/openSUSE:Packaging_Python#Compatibility_with_older_distributions
+%{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
+%{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")}
 Name:           etckeeper
 Version:        1.12
 Release:        0
@@ -31,7 +34,10 @@ Source99:       etckeeper.rpmlintrc
 Patch0:         etckeeper-zypp.patch
 Url:            http://joeyh.name/code/etckeeper/
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
+# see https://en.opensuse.org/openSUSE:Packaging_Python#Compatibility_with_older_distributions
+%if %{?suse_version: %{suse_version} > 1110} %{!?suse_version:1}
 BuildArch:      noarch
+%endif
 BuildRequires:  make
 %define LPM rpm
 # added for bzr 2014-07-10 bkbin005@rinku.zaq.ne.jp
