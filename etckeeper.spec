@@ -33,11 +33,10 @@ Url:            http://joeyh.name/code/etckeeper/
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 BuildArch:      noarch
 BuildRequires:  make
-# added for bzr 2014-07-10 bkbin005@rinku.zaq.ne.jp
-BuildRequires:  python-devel
+%define LPM rpm
 # added for bzr 2014-07-10 bkbin005@rinku.zaq.ne.jp
 BuildRequires:  bzr
-%define LPM rpm
+BuildRequires:  python-devel
 
 %if 0%{?suse_version}
 # modified 2014-07-09 bkbin005@rinku.zaq.ne.jp
@@ -137,6 +136,9 @@ install -D debian/cron.daily "%{buildroot}/etc/cron.daily/%{name}"
 %doc %{_mandir}/man8/etckeeper.8*
 %config %{_sysconfdir}/bash_completion.d/etckeeper
 # added python_sitelib files 2014-07-10 bkbin005@rinku.zaq.ne.jp
+# Are these right?
+%dir %{python_sitelib}/bzrlib
+%dir %{python_sitelib}/bzrlib/plugins
 %{python_sitelib}/bzrlib/plugins/%{name}/
 %{python_sitelib}/bzr_%{name}-*.egg-info
 
