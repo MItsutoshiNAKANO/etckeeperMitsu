@@ -23,23 +23,20 @@
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
 %{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")}
 Name:           etckeeper
-Version:        1.12
+Version:        1.12.0+20140712git
 Release:        0
 Summary:        Store /etc under Version Control
 License:        GPL-2.0+
 Group:          System/Management
-Source:         http://ftp.debian.org/debian/pool/main/e/etckeeper/etckeeper_%{version}.tar.gz
+Source:         %{name}_%{version}.tar.gz
 Source99:       etckeeper.rpmlintrc
-# PATCH-FIX-UPSTREAM etckeeper-zypp.patch bnc#884154 bkbin005@rinku.zaq.ne.jp -- fix for ZYpp
-Patch0:         etckeeper-zypp.patch
+# patch0 was merged to upstream.
+## PATCH-FIX-UPSTREAM etckeeper-zypp.patch bnc#884154 bkbin005@rinku.zaq.ne.jp -- fix for ZYpp
+#Patch0:         etckeeper-zypp.patch
 Url:            http://joeyh.name/code/etckeeper/
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
-# see https://en.opensuse.org/openSUSE:Packaging_Python#Compatibility_with_older_distributions
-%if %{?suse_version: %{suse_version} > 1110} %{!?suse_version:1}
-BuildArch:      noarch
-%endif
-BuildRequires:  make
 %define LPM rpm
+BuildRequires:  make
 # added for bzr 2014-07-10 bkbin005@rinku.zaq.ne.jp
 BuildRequires:  bzr
 BuildRequires:  python-devel
@@ -103,7 +100,6 @@ with YUM.
 
 %prep
 %setup -q -n "%{name}"
-%patch0 -p1
 
 %__perl -pi -e '
 s|^(\s*)(HIGHLEVEL_PACKAGE_MANAGER)=.+|$1$2=%{HPM}|;
@@ -115,17 +111,10 @@ s|^(\s*)(VCS)=.+|$1$2=git|;
 make %{?_smp_mflags}
 
 %install
-
 make \
     DESTDIR="%{buildroot}" \
-    PYTHON_INSTALL_OPTS="--prefix=%{_prefix} --root=%{buildroot}" \
+    PYTHON_INSTALL_OPTS="--prefix=%{_prefix} --install-purelib=%{python_sitearch}" \
     install
-
-# delete 2014-07-06 bkbin005@rinku.zaq.ne.jp - does not seems to work it.
-# so, delete it.
-## who cares about bzr...
-#rm -rf "{buildroot}{_prefix}/lib"/python*
-
 install -D debian/cron.daily "%{buildroot}/etc/cron.daily/%{name}"
 
 %clean
@@ -142,11 +131,8 @@ install -D debian/cron.daily "%{buildroot}/etc/cron.daily/%{name}"
 %doc %{_mandir}/man8/etckeeper.8*
 %config %{_sysconfdir}/bash_completion.d/etckeeper
 # added python_sitelib files 2014-07-10 bkbin005@rinku.zaq.ne.jp
-# Are these right?
-%dir %{python_sitelib}/bzrlib
-%dir %{python_sitelib}/bzrlib/plugins
-%{python_sitelib}/bzrlib/plugins/%{name}/
-%{python_sitelib}/bzr_%{name}-*.egg-info
+%{python_sitearch}/bzrlib/plugins/%{name}/
+%{python_sitearch}/bzr_%{name}-*.egg-info
 
 %files cron
 %defattr(-,root,root)

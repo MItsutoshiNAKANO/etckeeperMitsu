@@ -1,4 +1,16 @@
 -------------------------------------------------------------------
+Sat Jul 12 06:21:28 UTC 2014 - bkbin005@rinku.zaq.ne.jp
+
+- updated source tarball: 1.12 => 1.12.0+20140712git:
+  + Ignore check-mk-agent-logwatch's FHS violating
+    /etc/check_mk/logwatch.state.
+  + etckeeper-zypp.patch was merged to upstream. (bnc#884154)
+- removed etckeeper-zypp.patch:
+  it was merged to upstream.
+- moved positon of bzr support files:
+  python_sitelib => python_sitearch.
+
+-------------------------------------------------------------------
 Thu Jul 10 11:40:19 UTC 2014 - bkbin005@rinku.zaq.ne.jp
 
 - modified etckeeper.spec:
@@ -9,7 +21,7 @@ Thu Jul 10 11:40:19 UTC 2014 - bkbin005@rinku.zaq.ne.jp
 -------------------------------------------------------------------
 Thu Jul 10 10:46:21 UTC 2014 - bkbin005@rinku.zaq.ne.jp
 
-- modified etckeeper.spec:  added bzr support files.
+- modified etckeeper.spec: added bzr support files.
   Their files need "Buildrequires: python-devel bzr",
   but did not write them, so they were not installed untill now.
 
