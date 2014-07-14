@@ -23,16 +23,13 @@
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
 %{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")}
 Name:           etckeeper
-Version:        1.12.0+20140712git
+Version:        1.12+git2.g52582f7
 Release:        0
 Summary:        Store /etc under Version Control
 License:        GPL-2.0+
 Group:          System/Management
 Source:         %{name}_%{version}.tar.gz
 Source99:       etckeeper.rpmlintrc
-# patch0 was merged to upstream.
-## PATCH-FIX-UPSTREAM etckeeper-zypp.patch bnc#884154 bkbin005@rinku.zaq.ne.jp -- fix for ZYpp
-#Patch0:         etckeeper-zypp.patch
 Url:            http://joeyh.name/code/etckeeper/
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 %define LPM rpm
@@ -45,14 +42,14 @@ BuildRequires:  python-devel
 # modified 2014-07-09 bkbin005@rinku.zaq.ne.jp
 # Users should be able to select VCS.
 Recommends:     git
-Recommends:     %{name}-cron
-Recommends:     %{name}-zypp-plugin
+Recommends:     %{name}-cron = %{version}-%{release}
+Recommends:     %{name}-zypp-plugin = %{version}-%{release}
 BuildRequires:  libzypp
 %define HPM zypper
 %else
 BuildRequires:  yum
-Requires:       %{name}-cron
-Requires:       %{name}-yum-plugin
+Requires:       %{name}-cron = %{version}-%{release}
+Requires:       %{name}-yum-plugin = %{version}-%{release}
 %define HPM yum
 %endif
 
@@ -70,7 +67,8 @@ understand the basics of working with version control.
 Summary:        The etckeeper cron function
 Group:          System/Management
 Requires:       cron
-Requires:       etckeeper
+Requires:       etckeeper = %{version}-%{release}
+Provides:       etckeeper:%{_sysconfdir}/cron.daily/etckeeper
 
 %description cron
 The etckeeper-cron furnishes etckeeper collaboration function
@@ -81,8 +79,12 @@ with cron.
 %package zypp-plugin
 Summary:        The etckeeper collaboration function with ZYpp
 Group:          System/Management
-Requires:       etckeeper
+Requires:       etckeeper = %{version}-%{release}
 Requires:       zypp-plugin-python
+BuildRequires:  zypp-plugin-python
+Obsoletes:      etckeeper-pkgmanager-collabo < %{version}-%{release}
+Provides:       etckeeper-pkgmanager-collabo = %{version}-%{release}
+Provides:       etckeeper:%{_prefix}/lib/zypp/plugins/commit/zypper-etckeeper.py
 
 %description zypp-plugin
 The etckeeper-zypp-plugin furnishes etckeeper collaboration function
@@ -91,7 +93,10 @@ with ZYpp.
 %package yum-plugin
 Summary:        The etckeeper collaboration function with yum
 Group:          System/Management
-Requires:       etckeeper
+Requires:       etckeeper = %{version}-%{release}
+Obsoletes:      etckeeper-pkgmanager-collabo
+Provides:       etckeeper-pkgmanager-collabo = %{version}-%{release}
+Provides:       etckeeper:%{_sysconfdir}/yum/pluginconf.d/etckeeper.conf
 
 %description yum-plugin
 The etckeeper-yum-plugin furnishes etckeeper collaboration function
@@ -141,9 +146,6 @@ install -D debian/cron.daily "%{buildroot}/etc/cron.daily/%{name}"
 %if 0%{?suse_version}
 %files zypp-plugin
 %defattr(-,root,root)
-%dir %{_prefix}/lib/zypp
-%dir %{_prefix}/lib/zypp/plugins
-%dir %{_prefix}/lib/zypp/plugins/commit
 %{_prefix}/lib/zypp/plugins/commit/zypper-etckeeper.py
 %else
 %files yum-plugin

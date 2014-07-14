@@ -1,4 +1,71 @@
 -------------------------------------------------------------------
+Mon Jul 14 03:15:27 UTC 2014 - bkbin005@rinku.zaq.ne.jp
+
+- rollbacked to "Sun Jul 13 12:55:24 UTC 2014".
+
+-------------------------------------------------------------------
+Sun Jul 13 23:25:12 UTC 2014 - bkbin005@rinku.zaq.ne.jp
+
+- modified for RHEL:
+
+-------------------------------------------------------------------
+Sun Jul 13 22:51:14 UTC 2014 - bkbin005@rinku.zaq.ne.jp
+
+- modified for SLE_11:
+  SLE_11 does not have YUM, so I enclosed YUM's code with if macro.
+
+-------------------------------------------------------------------
+Sun Jul 13 22:16:48 UTC 2014 - bkbin005@rinku.zaq.ne.jp
+
+- modified for yum-plugin:
+  The openSUSE supports ZYpp and YUM.
+  But etckeeper does not support double package-manager.
+  So "make" runs twice, first for YUM, second for ZYPP.
+  And "make install" runs twice too.
+
+-------------------------------------------------------------------
+Sun Jul 13 12:55:24 UTC 2014 - bkbin005@rinku.zaq.ne.jp
+
+- modified source's version string.
+  Please see also:
+  https://en.opensuse.org/openSUSE:Package_naming_guidelines#SCM_snapshots
+- added "Provides:" for split packages: etekeeper-cron and plugins.
+  Please see also:
+  https://en.opensuse.org/openSUSE:Package_dependencies#Splitting_off_a_sub-pack
+- added "Provides:" for renaming:
+  pkgmanager-collabo => (zypp|yum)-plugin.
+  Please see also:
+  https://en.opensuse.org/openSUSE:Package_dependencies#Renaming_a_package
+age
+- removed lib/zypp directories:
+  They should belong libzypp.
+  + remove them.
+  + added "BuildRequire: zypp-plugin-python".
+
+-------------------------------------------------------------------
+Sun Jul 13 06:18:31 UTC 2014 - bkbin005@rinku.zaq.ne.jp
+
+- added version-release number to Recommendes and Requires.
+  It is desirable that etckeeper packages are same version.
+  
+
+-------------------------------------------------------------------
+Sun Jul 13 05:03:33 UTC 2014 - bkbin005@rinku.zaq.ne.jp
+
+- added version number to Recommends etckeeper-cron
+  and etckeeper-zypp-plugin:
+  These are desirable same version with etckeeper package.
+
+-------------------------------------------------------------------
+Sun Jul 13 04:26:02 UTC 2014 - bkbin005@rinku.zaq.ne.jp
+
+- added "Obsoletes: etckeeper-pkgmanager-collabo".
+  This package renamed
+  to zypp-plugin-python or etckeeper-yum-plugin.
+  Plese see also:
+  http://lists.opensuse.org/archive/opensuse-factory/2014-07/msg00072.html
+
+-------------------------------------------------------------------
 Sat Jul 12 06:21:28 UTC 2014 - bkbin005@rinku.zaq.ne.jp
 
 - updated source tarball: 1.12 => 1.12.0+20140712git:
