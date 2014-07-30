@@ -1,4 +1,18 @@
 -------------------------------------------------------------------
+Wed Jul 30 05:30:32 UTC 2014 - bkbin005@rinku.zaq.ne.jp
+
+- updated Source to 1.12+git9.ga6ac74e
+  + remove etckeeper-commandname-validation.patch:
+    The validation was merged to Source.
+
+-------------------------------------------------------------------
+Tue Jul 15 14:10:26 UTC 2014 - bkbin005@rinku.zaq.ne.jp
+
+- added etckeeper-commandname-validation.patch:
+  The etckeeper's subcommand string was not checked.
+  So I wrote this patch.
+
+-------------------------------------------------------------------
 Mon Jul 14 03:15:27 UTC 2014 - bkbin005@rinku.zaq.ne.jp
 
 - rollbacked to "Sun Jul 13 12:55:24 UTC 2014".

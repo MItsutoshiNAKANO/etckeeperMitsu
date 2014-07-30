@@ -23,7 +23,7 @@
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
 %{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")}
 Name:           etckeeper
-Version:        1.12+git2.g52582f7
+Version:        1.12+git9.ga6ac74e
 Release:        0
 Summary:        Store /etc under Version Control
 License:        GPL-2.0+
@@ -71,13 +71,12 @@ Requires:       etckeeper = %{version}-%{release}
 Provides:       etckeeper:%{_sysconfdir}/cron.daily/etckeeper
 
 %description cron
-The etckeeper-cron furnishes etckeeper collaboration function
-with cron.
+The etckeeper-cron calls etckeeper from cron.
 
 
 %if 0%{?suse_version}
 %package zypp-plugin
-Summary:        The etckeeper collaboration function with ZYpp
+Summary:        The etckeeper integration function with ZYpp
 Group:          System/Management
 Requires:       etckeeper = %{version}-%{release}
 Requires:       zypp-plugin-python
@@ -87,11 +86,10 @@ Provides:       etckeeper-pkgmanager-collabo = %{version}-%{release}
 Provides:       etckeeper:%{_prefix}/lib/zypp/plugins/commit/zypper-etckeeper.py
 
 %description zypp-plugin
-The etckeeper-zypp-plugin furnishes etckeeper collaboration function
-with ZYpp.
+The etckeeper-zypp-plugin calls etckeeper from ZYpp.
 %else
 %package yum-plugin
-Summary:        The etckeeper collaboration function with yum
+Summary:        The etckeeper integration function with YUM
 Group:          System/Management
 Requires:       etckeeper = %{version}-%{release}
 Obsoletes:      etckeeper-pkgmanager-collabo
@@ -99,8 +97,7 @@ Provides:       etckeeper-pkgmanager-collabo = %{version}-%{release}
 Provides:       etckeeper:%{_sysconfdir}/yum/pluginconf.d/etckeeper.conf
 
 %description yum-plugin
-The etckeeper-yum-plugin furnishes etckeeper collaboration function
-with YUM.
+The etckeeper-zypp-plugin calls etckeeper from YUM.
 %endif
 
 %prep
@@ -135,7 +132,6 @@ install -D debian/cron.daily "%{buildroot}/etc/cron.daily/%{name}"
 %config %{_sysconfdir}/etckeeper/*.d/*
 %doc %{_mandir}/man8/etckeeper.8*
 %config %{_sysconfdir}/bash_completion.d/etckeeper
-# added python_sitelib files 2014-07-10 bkbin005@rinku.zaq.ne.jp
 %{python_sitearch}/bzrlib/plugins/%{name}/
 %{python_sitearch}/bzr_%{name}-*.egg-info
 
