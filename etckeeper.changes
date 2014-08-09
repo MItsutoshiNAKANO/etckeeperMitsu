@@ -1,4 +1,21 @@
 -------------------------------------------------------------------
+Sat Aug  9 08:51:30 UTC 2014 - bkbin005@rinku.zaq.ne.jp
+
+- added etckeeper-avoid-packagelist.patch:
+  Because it is slow that some package manager make the packagelist
+  (eg, rpm -qa), high-level package manager might time out
+  (eg. zypper in/remove).
+  So I added this patch.
+  If you think that the packagelist is unnecessary,
+  set AVOID_PACKAGELIST=1 in etckeeper.conf.
+  Or if you want to avoid it temporarily,
+  you can use environment variable ETCKEEPER_AVOID_PACKAGELIST=1 .
+  (eg, ETCKEEPER_AVOID_PACKAGELIST=1 zypper update).
+  This patch was sent to upstream, but Joey does not accept it yet.
+  Please see also gh#joeyh/etckeeper#17 .
+
+
+-------------------------------------------------------------------
 Wed Jul 30 05:30:32 UTC 2014 - bkbin005@rinku.zaq.ne.jp
 
 - updated Source to 1.12+git9.ga6ac74e

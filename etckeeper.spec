@@ -30,6 +30,8 @@ License:        GPL-2.0+
 Group:          System/Management
 Source:         %{name}_%{version}.tar.gz
 Source99:       etckeeper.rpmlintrc
+# PATCH-FIX-UPSTREAM etckeeper-avoid-packagelist.patch gh#joeyh/etckeeper#17 bkbin005@rinku.zaq.ne.jp -- add AVOID_PACKAGELIST
+Patch0:         etckeeper-avoid-packagelist.patch
 Url:            http://joeyh.name/code/etckeeper/
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 %define LPM rpm
@@ -102,6 +104,7 @@ The etckeeper-zypp-plugin calls etckeeper from YUM.
 
 %prep
 %setup -q -n "%{name}"
+%patch0 -p1
 
 %__perl -pi -e '
 s|^(\s*)(HIGHLEVEL_PACKAGE_MANAGER)=.+|$1$2=%{HPM}|;
