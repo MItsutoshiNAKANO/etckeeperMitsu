@@ -23,12 +23,12 @@
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
 %{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")}
 Name:           etckeeper
-Version:        1.12+git9.ga6ac74e
+Version:        1.13
 Release:        0
 Summary:        Store /etc under Version Control
 License:        GPL-2.0+
 Group:          System/Management
-Source:         %{name}_%{version}.tar.gz
+Source:         http://ftp.debian.org/debian/pool/main/e/etckeeper/%{name}_%{version}.tar.gz
 Source99:       etckeeper.rpmlintrc
 # PATCH-FIX-UPSTREAM etckeeper-avoid-packagelist.patch gh#joeyh/etckeeper#17 bkbin005@rinku.zaq.ne.jp -- add AVOID_PACKAGELIST
 Patch0:         etckeeper-avoid-packagelist.patch

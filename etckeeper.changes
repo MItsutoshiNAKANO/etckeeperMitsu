@@ -1,4 +1,15 @@
 -------------------------------------------------------------------
+Sun Aug 10 01:18:27 UTC 2014 - bkbin005@rinku.zaq.ne.jp
+
+- updated Source to 1.13:
+  + Ignore check-mk-agent-logwatch's FHS violating
+    /etc/check_mk/logwatch.state. Closes: deb#753903
+  + Only allow [-a-z_] in etckeeper commands to avoid any possible
+    directory traversal etc issues.
+  + update-ignore, uninit: Fix parsing of ignore files containing '\'
+
+
+-------------------------------------------------------------------
 Sat Aug  9 08:51:30 UTC 2014 - bkbin005@rinku.zaq.ne.jp
 
 - added etckeeper-avoid-packagelist.patch:
