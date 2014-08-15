@@ -68,9 +68,13 @@ understand the basics of working with version control.
 %package cron
 Summary:        The etckeeper cron function
 Group:          System/Management
-Requires:       cron
 Requires:       etckeeper = %{version}-%{release}
 Provides:       etckeeper:%{_sysconfdir}/cron.daily/etckeeper
+%if 0%{?suse_version}
+Requires:       cron
+%else
+Requires:       crontabs
+%endif
 
 %description cron
 The etckeeper-cron calls etckeeper from cron.
