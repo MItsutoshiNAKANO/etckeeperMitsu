@@ -1,4 +1,13 @@
 -------------------------------------------------------------------
+Mon Aug 18 11:55:42 UTC 2014 - bkbin005@rinku.zaq.ne.jp
+
+- renamed to etckeeper-rpmlintrc from etckeeper.rpmlintrc:
+  To follow the packaging guidelines.
+  Please see also:
+  https://build.opensuse.org/request/show/244964#request_history
+  http://lists.opensuse.org/opensuse-packaging/2007-07/msg00000.html
+
+-------------------------------------------------------------------
 Fri Aug 15 22:15:20 UTC 2014 - bkbin005@rinku.zaq.ne.jp
 
 - updated Source to 1.13:

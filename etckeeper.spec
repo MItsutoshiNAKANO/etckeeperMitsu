@@ -29,7 +29,7 @@ Summary:        Store /etc under Version Control
 License:        GPL-2.0+
 Group:          System/Management
 Source:         http://ftp.debian.org/debian/pool/main/e/etckeeper/%{name}_%{version}.tar.gz
-Source99:       etckeeper.rpmlintrc
+Source99:       %{name}-rpmlintrc
 # PATCH-FIX-UPSTREAM etckeeper-avoid-packagelist.patch gh#joeyh/etckeeper#17 bkbin005@rinku.zaq.ne.jp -- add AVOID_PACKAGELIST
 Patch0:         etckeeper-avoid-packagelist.patch
 Url:            http://joeyh.name/code/etckeeper/
